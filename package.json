@@ -17,6 +17,7 @@
   "devDependencies": {
     "@nuxtjs/axios": "^5.5.1",
     "element-ui": "2.4.11",
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.18.9",
+    "universal-cookie": "^4.0.0"
   }
 }
