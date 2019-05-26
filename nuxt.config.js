@@ -38,7 +38,9 @@ export default {
     { src: '~plugins/element-ui', ssr: false }
 
   ],
-
+  router : {
+    middleware: ['auth-cookie']
+  },
   /*
   ** Nuxt.js modules
   */
