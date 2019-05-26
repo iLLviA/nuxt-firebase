@@ -1,23 +1,48 @@
 <template>
-  <div>
-    <div class="block">
-      <h4>Nuxt.js + Element？</h4>
-      <el-rate v-model="value" :colors="['#2F3D4D', '#64B486', '#4B7C6E']"></el-rate>
-    </div>
-  </div>
+  <section class="coninaer">
+    <el-card style="flex:1">
+      <div slot="header" class="clearfix">
+        <span>ログイン</span>
+      </div>
+      <form>
+        <div class="form-content">
+          <span>ユーザー</span>
+          <el-input placeholder="" v-model="formData.id"/>
+        </div>
+        <div class="form-content">
+          <el-checkbox v-model="isCreateMode">
+            アカウントを作成する
+          </el-checkbox>
+        </div>
+        <div class="text-right">
+          <el-button type="primary">
+            {{buttonText}}
+          </el-button>
+        </div>
+      </form>
+    </el-card>
+  </section>
 </template>
 
 <style scoped>
-  .block {
-    padding: 0 20px;
-  }
+.form-content {
+  margin: 16px 0;
+}
 </style>
 
 <script>
 export default {
-  data () {
+  asyncData() {
     return {
-      value: null
+      isCreateMode: false,
+      formData: {
+        id: ''
+      }
+    }
+  },
+  computed: {
+    buttonText() {
+      return this.isCreateMode ? "新規登録" : "ログイン"
     }
   }
 }
