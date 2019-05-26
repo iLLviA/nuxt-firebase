@@ -1,6 +1,6 @@
-import moment from '~plugins/moment'
+import moment from '~/plugins/moment'
 
-export const state= ({
+export const state = () => ({
     posts: []
 })
 
