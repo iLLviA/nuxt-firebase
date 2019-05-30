@@ -28,7 +28,8 @@ export const actions = {
         payload[id] = {id}
         await this.$axios.$patch(`/users.json`, payload)
         console.log('register')
-        const user = await this.$axios.$get(`/user/${id}.json`)
+        const user = await this.$axios.$get(`/users/${id}.json`)
+        console.log(!user.id)
         if(!user.id) throw new Error('Invlid user')
         commit('setUser', { user })
     }

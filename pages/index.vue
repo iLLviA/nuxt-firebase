@@ -49,7 +49,10 @@ export default {
     buttonText() {
       return this.isCreateMode ? "新規登録" : "ログイン"
     },
-    ...mapGetters['user']
+    ...mapGetters(['user'])
+  },
+  mounted() {
+    console.log(process.env.APIKEY)
   },
   methods: {
     async handleClickSubmit() {
@@ -65,7 +68,7 @@ export default {
             duration: 1000
           })
           cookies.set('user',JSON.stringify(this.user))
-          this.$route.push('/posts/')
+          this.$router.push('/posts/')
         } catch(e) {
           this.$notify.error({
             title: 'アカウント作成失敗',

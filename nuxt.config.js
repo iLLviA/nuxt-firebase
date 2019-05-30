@@ -1,7 +1,6 @@
 import pkg from './package'
 
 require('dotenv').config();
-const{APIKEY } = process.env;
 
 export default {
   mode: 'universal',
