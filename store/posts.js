@@ -10,6 +10,7 @@ export const getters = {
 
 export const mutations = {
     addPost(state, { post }){
+        console.log(post,1234)
         state.posts.push(post)
     },
     updatePost(state, { post }){
@@ -34,5 +35,15 @@ export const actions = {
             putData
         ])
         commit('addPost', { post })
+    },
+    async fetchPosts({ commit }) {
+        const posts = await this.$axios.$get(`/posts.json`)
+        // Object.entries(posts).reverse().forEach(([id, content]) => console.log(content))
+        commit('clearPosts')
+        Object.entries(posts).reverse().forEach(([id, content]) => commit('addPost', {post: { id, ...content}}))
+    },
+    async fetchPost({ commit },{ id }){
+        const post = await this.$axios.$get(`/posts/${id}.json`)
+        commit('addPost', { post: {...post, id } })
     }
 }
