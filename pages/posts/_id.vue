@@ -34,7 +34,7 @@ export default {
         }
     },
     computed: {
-        posts() {
+        post() {
             return this.posts.find(p => p.id === this.$route.params.id)
         },
         ...mapGetters('posts', ['posts'])
