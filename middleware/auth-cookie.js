@@ -8,6 +8,6 @@ export default ({req, store}) => {
     const user = cookie.get('user')
     if(user && user.id){
         const { id, likes} = user
-        store.commit('setUser', {user: { id: likes}}) 
+        store.commit('setUser', {user: { id,likes}}) 
     }
 }

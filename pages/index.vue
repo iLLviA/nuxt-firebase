@@ -51,9 +51,6 @@ export default {
     },
     ...mapGetters(['user'])
   },
-  mounted() {
-    console.log(process.env.APIKEY)
-  },
   methods: {
     async handleClickSubmit() {
       const cookies = new Cookies()
