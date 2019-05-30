@@ -1,5 +1,8 @@
 import pkg from './package'
 
+require('dotenv').config();
+const{APIKEY } = process.env;
+
 export default {
   mode: 'universal',
   // srcDir: 'app',
@@ -61,5 +64,14 @@ export default {
     */
     extend(config, ctx) {
     }
+  },
+  env: {
+    APIKEY: process.env.APIKEY,
+    AUTHDOMAIN: process.env.AUTHDOMAIN,
+    DATABASEURL: process.env.DATABASEURL,
+    PROJECTID: process.env.PROJECTID,
+    STORAGEBUCKET: process.env.STORAGEBUCKET,
+    MESSAGINGSRNDERID: process.env.MESSAGINGSRNDERID,
+    APPID: process.env.APPID
   }
 }
