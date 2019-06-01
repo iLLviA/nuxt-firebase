@@ -51,9 +51,6 @@ export default {
             return Object.assign({posts: []}, user)
         },
         ...mapGetters('users', ['users'] )
-    },
-    mounted() {
-        console.log(this.user)
     }
 }
 </script>

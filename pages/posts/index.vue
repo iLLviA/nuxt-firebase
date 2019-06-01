@@ -42,7 +42,6 @@ export default {
     computed: {
         showPosts() {
             return this.posts.map( post => {
-                console.log(this.posts)
                 post.created_at = moment(post.created_at).format('YYYY/MM/DD HH:mm:ss')
                 return post
             })
