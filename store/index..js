@@ -1,19 +1,19 @@
 import moment from '~/plugins/moment'
 
 export const state = () => ({
-    isLoaggendIn: false,
+    isLoggedIn: false,
     user: null
 })
 
 export const getters = {
-    isLoaggendIn: (state) => state.isLoaggendIn,
+    isLoggedIn: (state) => state.isLoggedIn,
     user: (state) => state.user ? Object.assign({likes: []}, state.user) : null,
 }
 
 export const mutations = {
     setUser(state, {user}) {
         state.user = user
-        state.isLoaggendIn = true
+        state.isLoggedIn = true
     }
 }
 

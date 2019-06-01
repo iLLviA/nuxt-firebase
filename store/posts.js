@@ -6,7 +6,7 @@ export const state = () => ({
 
 export const getters = {
     posts: (state) => {
-        console.log(state)
+        console.log(state.posts.map((post) => Object.assign({likes: []}, post)))
         return state.posts.map((post) => Object.assign({likes: []}, post))
     }}
 
