@@ -9,6 +9,10 @@
                 <p>{{post.body}}</p>
                 <no-ssr>
                     <p class="text-right">
+                        <el-button type="warning" @click="del" round>
+                            <span class="el-icon-delete" />
+                            <span>remove</span>
+                        </el-button>
                         <el-button :disabled="!isLoggedIn" type="warning" v-if="isLiked" @click="unlike " round>
                             <span class="el-icon-star-on" />
                             <span>{{post.likes.length}}</span>
@@ -62,9 +66,19 @@ export default {
             if(!this.isLoggedIn){
                 return 
             }
+            const likePayload = { user: this.user, post: this.post }
+            this.removeLikePost(cloneDeep(likePayload))
+        },
+        del() {
+            if(!this.isLoggedIn){
+                return 
+            }
+            
+            
+
         },
         ...mapActions(['addLikeLogToUser']),
-        ...mapActions('posts',['addLikeToPost'])
+        ...mapActions('posts',['addLikeToPost','removeLikePost'])
     },
     filters: {
         time(val) {

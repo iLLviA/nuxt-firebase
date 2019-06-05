@@ -36,7 +36,7 @@ export const actions = {
             putData
         ])
         commit('addPost', { post })
-    },
+    },      
     async fetchPosts({ commit }) {
         const posts = await this.$axios.$get(`/posts.json`)
         commit('clearPosts')
@@ -53,6 +53,13 @@ export const actions = {
             post_id: post.id
         })
         const newPost = await this.$axios.$put(`/posts/${post.id}.json`, post)
+        console.log("Like!!")
         commit('updatePost', { post: newPost })
+    },
+    async removeLikePost({commit},{post,user}){
+        post.likes = post.likes.filter( l => l.user_id !== user.id ) || []
+        const newPost = await this.$axios.$put(`/posts/${post.id}.json`, post)
+        commit('updatePost', {post:newPost})
+        console.log("unLiked!!")
     }
 }
