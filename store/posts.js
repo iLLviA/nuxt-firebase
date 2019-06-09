@@ -5,10 +5,17 @@ export const state = () => ({
 })
 
 export const getters = {
-    posts: (state) => {
-        console.log(state.posts.map((post) => Object.assign({likes: []}, post)))
-        return state.posts.map((post) => Object.assign({likes: []}, post))
-    }}
+    posts: state => {
+        return state.posts.map(post => {
+            post.user = state.users.find(user => user.email === post.from)
+        })
+    },
+    post: state => {
+        const post = state.post
+        if(!post) return null
+        post.user = state.users.find(user => user.email === post.from)
+    }
+}
 
 export const mutations = {
     addPost(state, { post }){
@@ -20,10 +27,37 @@ export const mutations = {
     },
     clearPosts(state) {
         state.posts = []
+    },
+    savePost(state, { post }){
+        state.post = post
     }
 }
 
 export const actions = {
+    async initSingle({ commit },{ id }){
+        const snapshot = await firestore
+        .collection('post')
+        .doc(id)
+        .get()
+        commit('savePost', { post: snapshot.data() })
+    },
+    initPost: fireAction(({bindFirebaseRef}) => {
+        const postsCollection = firestore
+            .collection('posts')
+            .orderBy('createdAt', 'desc')
+        bindFirebaseRef('posts', postsCollection)
+    }),
+    addPost: firebaseAction((ctx, {id, email, body, createAt }) => {
+        firestore
+            .collection('post')
+            .doc(`${id}`)
+            .set({
+                id,
+                from: email,
+                body,
+                createAt
+            })
+    }),
     async publishPost({ commit }, { payload }){
         const user = await this.$axios.$get(`/users/${payload.user.id}.json`)
         const post_id = ( await this.$axios.$post('/posts.json', payload)).name

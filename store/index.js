@@ -1,23 +1,41 @@
 import moment from '~/plugins/moment'
+import firebase from '~/plugins/firebase'
+import cloneDeep from 'lodash.clonedeep'
+import { firebaseMutations, firebaseAction } from 'vuexfire'
+
+const firestore = firebase.firestore()
+
+if(process.browser){
+    const settings= { timestampsInSnapshots: true }
+    firestore.settings(settings)
+}
+
+const provider = new firebase.auth.GoogleAuthProvider()
 
 export const state = () => ({
     isLoggedIn: false,
-    user: null
+    isLoaded: false
 })
 
 export const getters = {
-    isLoggedIn: (state) => state.isLoggedIn,
-    user: (state) => state.user ? Object.assign({likes: []}, state.user) : null,
+    isLoggedIn: state => state.isLoggedIn,
+    isLoaded: state => state.isLoaded
 }
 
 export const mutations = {
-    setUser(state, {user}) {
-        state.user = user
-        state.isLoggedIn = true
-    }
+    setIsLoaded(state, next){
+        state.isLoaded = !!next
+    },
+    ...firebaseMutations
 }
 
 export const actions = {
+    callAuth(){
+        firebase.auth().signInWithRedirect(provider)
+    },
+    loadComplete({ commit }){
+        commit('setIsLoaded', true)
+    },
     async login({commit }, {id }) {
         const user = await this.$axios.$get(`/users/${id}.json`)
         if(!user.id) throw new Error('Invalid user')
